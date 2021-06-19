@@ -1,9 +1,13 @@
 # =============== #
 # Unity generated #
 # =============== #
-Temp/
-Library/
-
+[Tt]emp/
+[Ll]ibrary/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Pp]ackages/
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
 # ===================================== #
@@ -11,14 +15,16 @@ ExportedObj/
 obj/
 *.svd
 *.userprefs
-# /*.csproj
+*.csproj
 *.pidb
 *.suo
-# /*.sln
+*.sln
 *.user
 *.unityproj
 *.booproj
-
+*.user
+*.tmp
+*.pdb
 # ============ #
 # OS generated #
 # ============ #
@@ -30,3 +36,7 @@ obj/
 ehthumbs.db
 Thumbs.db
 /bin
+/src/Assets/Resources
+/src/Assets/Resources/Images
+/src/Logs
+/src/Packages
