@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using System;
+using UnityEngine.SceneManagement;
 
 public class LoadScreen : MonoBehaviour
 {
@@ -17,9 +19,13 @@ public class LoadScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        
+        AddEventHandler();
+    }
 
+    private void AddEventHandler()
+    {
+        StartButton.GetComponent<Button>().onClick.AddListener(() => NewGame());
+        ContinueButton.GetComponent<Button>().onClick.AddListener(() => ContinueGame());
     }
 
     // Update is called once per frame
@@ -30,12 +36,20 @@ public class LoadScreen : MonoBehaviour
 
     public void ShowButtons()
     {
-        Debug.Log(StartButton);
-        Debug.Log(ContinueButton);
         var seq = DOTween.Sequence();
         seq.Join(StartButton.GetComponent<Image>().DOColor(MainCanvas.RealColor, 3f))
             .Join(ContinueButton.GetComponent<Image>().DOColor(MainCanvas.RealColor, 3f));
         StartButton.SetActive(true);
         ContinueButton.SetActive(true);
+    }
+
+    private void NewGame()
+    {
+        SceneManager.LoadScene("Scenes/ForestStageLv3", LoadSceneMode.Single);
+    }
+
+    private void ContinueGame()
+    {
+
     }
 }
