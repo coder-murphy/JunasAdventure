@@ -13,7 +13,7 @@ public class StageTitle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ShowTitle();
+
     }
 
     // Update is called once per frame
@@ -22,17 +22,31 @@ public class StageTitle : MonoBehaviour
         
     }
 
-    void ShowTitle()
+    /// <summary>
+    /// 展示标题
+    /// </summary>
+    public Sequence ShowTitle()
     {
         var img = Title.GetComponent<Image>();
         img.color = new Color(1f, 1f, 1f, 0f);
         Title.SetActive(true);
         var seq = DOTween.Sequence();
-        seq.Append(img.DOColor(new Color(1f, 1f, 1f, 1f), 1.5f))
+        return seq.Append(img.DOColor(new Color(1f, 1f, 1f, 1f), 1.5f))
             .Append(img.DOColor(new Color(1f, 1f, 1f, 1f), 1.5f))
             .AppendCallback(() => {
                 TitleShowCompleted?.Invoke();
             });
+    }
+
+    /// <summary>
+    /// 淡出标题
+    /// </summary>
+    /// <returns></returns>
+    public Sequence FadeTitle()
+    {
+        var img = Title.GetComponent<Image>();
+        var seq = DOTween.Sequence();
+        return seq.Append(img.DOColor(new Color(0, 0, 0, 0), 1.5f));
     }
 
     /// <summary>

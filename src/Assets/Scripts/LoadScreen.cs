@@ -10,6 +10,10 @@ public class LoadScreen : MonoBehaviour
 {
     public GameObject StartButton;
     public GameObject ContinueButton;
+    /// <summary>
+    /// 游戏管理器
+    /// </summary>
+    public GameManager MyGameManager => GameManager.Instance;
 
     private void Awake()
     {
@@ -45,7 +49,7 @@ public class LoadScreen : MonoBehaviour
 
     private void NewGame()
     {
-        SceneManager.LoadScene("Scenes/ForestStageLv3", LoadSceneMode.Single);
+        MyGameManager.LoadStage(StageType.GloomForest);
     }
 
     private void ContinueGame()
