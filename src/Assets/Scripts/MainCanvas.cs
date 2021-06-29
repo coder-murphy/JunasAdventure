@@ -29,7 +29,7 @@ public class MainCanvas : MonoBehaviour
     {
         //Screen.SetResolution(1024, 768, false);
         _RootCanvas = GameObject.Find("Canvas");
-        Object screen = Resources.Load("Prefabs/LoadingScreen");
+        Object screen = Resources.Load("Prefabs/GameFirstEntryScreen");
         _GameLoadingScreen = Instantiate(screen) as GameObject;
         _GameLoadingScreen.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 0f);
         _GameLoadingScreen.transform.SetParent(_RootCanvas.transform);
