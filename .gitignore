@@ -25,6 +25,7 @@ obj/
 *.user
 *.tmp
 *.pdb
+*.meta
 # ============ #
 # OS generated #
 # ============ #
