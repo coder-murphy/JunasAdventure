@@ -11,9 +11,9 @@ public class Character : MonoBehaviour
     /// </summary>
     internal const string AniName_CharState = "PlayerCharState";
 
-    float speed = 20.0f;   //移动速度
+    float speed = 1500.0f;   //移动速度
 
-    float jumpForce = 15000.0f;   //跳跃力
+    float jumpForce = 8000.0f;   //跳跃力
 
     Animator CharAnimator => gameObject.GetComponent<Animator>();
 
@@ -38,6 +38,8 @@ public class Character : MonoBehaviour
     }
 
     bool isJumping = false;
+    bool isAttacking = false;
+    bool isMoving = false;
 
     private void Update()
     {
@@ -51,20 +53,9 @@ public class Character : MonoBehaviour
         float scaleX = 0;
         float scaleY = sc.y;
         var speedY = rg.velocity.y;
-        if (isJumping == false)
+        if(Input.GetKeyUp(KeyCode.X))
         {
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                rg.velocity = new Vector2(rg.velocity.x, jumpForce * Time.deltaTime);
-                CharAnimator.SetInteger(AniName_CharState, 2);
-                AniState = PlayerCharAnimationState.Jump;
-                isJumping = true;
-            }
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                CharAnimator.SetInteger(AniName_CharState, 3);
-                AniState = PlayerCharAnimationState.Attack;
-            }
+            isAttacking = false;
         }
     }
 
@@ -84,12 +75,12 @@ public class Character : MonoBehaviour
         if (collision.collider.tag == "Ground")
         {
             isJumping = false;
-            if (rg.velocity.x < -0.1f)
+            if (rg.velocity.x < -0.10f)
             {
                 AniState = PlayerCharAnimationState.WalkLeft;
                 CharAnimator.SetInteger(AniName_CharState, 1);
             }
-            else if (rg.velocity.x > 0.1f)
+            else if (rg.velocity.x > 0.10f)
             {
                 AniState = PlayerCharAnimationState.WalkRight;
                 CharAnimator.SetInteger(AniName_CharState, 1);
@@ -103,39 +94,111 @@ public class Character : MonoBehaviour
         }
     }
 
+    void ResetAttackState()
+    {
+        isAttacking = false;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
         var rg = this.GetComponent<Rigidbody2D>();
+        var coli = this.GetComponent<CapsuleCollider2D>();
         var vecX = Input.GetAxis("Horizontal");
         var vecY = Input.GetAxis("Vertical");
         var sc = CharTransform.localScale;
         float scaleX = 0;
         float scaleY = sc.y;
         var speedY = rg.velocity.y;
-        if (Input.GetKey(KeyCode.LeftArrow))
+        bool isDoubleDir = Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow);
+        if (isJumping == false)
         {
-            rg.velocity = new Vector2(vecX * speed, rg.velocity.y);
-            scaleX = sc.x > 0 ? -sc.x : sc.x;
-            CharTransform.localScale = new Vector2(scaleX, scaleY);
+            if (Input.GetKey(KeyCode.C))
+            {
+                isJumping = true;
+                //coli.enabled = false;
+                rg.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                //rg.velocity = new Vector2(rg.velocity.x, jumpForce * Time.deltaTime);
+                CharAnimator.SetInteger(AniName_CharState, 2);
+                AniState = PlayerCharAnimationState.Jump;
+                //Invoke("ResetCollider", 0.5f);
+            }
+            if (Input.GetKey(KeyCode.X) && isAttacking == false && isMoving == false)
+            {
+                Debug.Log("攻击");
+                isAttacking = true;
+                CharAnimator.SetInteger(AniName_CharState, 3);
+                AniState = PlayerCharAnimationState.Attack;
+                Invoke("ResetAttackState", 0.6f);
+            }
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        else
         {
-            rg.velocity = new Vector2(vecX * speed, rg.velocity.y);
-            scaleX = Math.Abs(sc.x);
-            CharTransform.localScale = new Vector2(scaleX, scaleY);
+
         }
-        if (vecX < -0.30f && Math.Abs(vecY) < 0.30f && isJumping == false)
+
+        if (Input.GetKey(KeyCode.LeftArrow) && isDoubleDir == false && isAttacking == false)
         {
-            AniState = PlayerCharAnimationState.WalkLeft;
-            CharAnimator.SetInteger(AniName_CharState, 1);
+            //rg.velocity = new Vector2(vecX * speed, rg.velocity.y);
+            if (Input.GetKey(KeyCode.X))
+            {
+                Debug.Log("攻击");
+                isAttacking = true;
+                CharAnimator.SetInteger(AniName_CharState, 3);
+                AniState = PlayerCharAnimationState.Attack;
+                Invoke("ResetAttackState", 0.6f);
+            }
+            else
+            {
+                rg.AddForce(new Vector2(vecX * speed, 0), ForceMode2D.Impulse);
+                scaleX = sc.x > 0 ? -sc.x : sc.x;
+                CharTransform.localScale = new Vector2(scaleX, scaleY);
+                if (isJumping)
+                {
+
+                }
+                else
+                {
+                    AniState = PlayerCharAnimationState.WalkLeft;
+                    CharAnimator.SetInteger(AniName_CharState, 1);
+                }
+            }
         }
-        if (vecX > 0.30f && Math.Abs(vecY) < 0.30f && isJumping == false)
+        if (Input.GetKey(KeyCode.RightArrow) && isDoubleDir == false && isAttacking == false)
         {
-            AniState = PlayerCharAnimationState.WalkRight;
-            CharAnimator.SetInteger(AniName_CharState, 1);
+            //rg.velocity = new Vector2(vecX * speed, rg.velocity.y);
+            if (Input.GetKey(KeyCode.X))
+            {
+                Debug.Log("攻击");
+                isAttacking = true;
+                CharAnimator.SetInteger(AniName_CharState, 3);
+                AniState = PlayerCharAnimationState.Attack;
+                Invoke("ResetAttackState", 0.6f);
+            }
+            else
+            {
+                rg.AddForce(new Vector2(vecX * speed, 0), ForceMode2D.Impulse);
+                scaleX = Math.Abs(sc.x);
+                CharTransform.localScale = new Vector2(scaleX, scaleY);
+                if (isJumping)
+                {
+
+                }
+                else
+                {
+                    AniState = PlayerCharAnimationState.WalkRight;
+                    CharAnimator.SetInteger(AniName_CharState, 1);
+                }
+            }
+
+
         }
-        if (Math.Abs(vecX) < 0.30f && Math.Abs(speedY) < 0.30f)
+        if (isDoubleDir && isJumping == false)
+        {
+            CharAnimator.SetInteger(AniName_CharState, 0);
+            AniState = PlayerCharAnimationState.Stand;
+        }
+        if (Math.Abs(vecX) < 0.30f && Math.Abs(speedY) < 0.30f && isAttacking == false && isJumping == false)
         {
             CharAnimator.SetInteger(AniName_CharState, 0);
             AniState = PlayerCharAnimationState.Stand;
