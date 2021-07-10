@@ -12,9 +12,16 @@ using UnityEngine.UI;
 public class ForestStageLv3 : MonoBehaviour
 {
     // Start is called before the first frame update
+    GameManager _GameManager => GameObject.Find("GameManager").GetComponent<GameManager>();
+
+    private void Awake()
+    {
+        EntryBattleArea();
+    }
+
     void Start()
     {
-        EntryBattleArea ();
+        Debug.Log("加载ui完毕");
     }
 
     // Update is called once per frame
@@ -23,21 +30,34 @@ public class ForestStageLv3 : MonoBehaviour
         
     }
 
+    private GameObject _RootCanvas = null;
+
+    private GameObject _CharProfile = null;
+    /// <summary>
+    /// 读取界面
+    /// </summary>
+    private void LoadUI()
+    {
+        _RootCanvas = GameObject.Find("Canvas");
+        _CharProfile = Instantiate(Resources.Load("Prefabs/UI/CharProfile")) as GameObject;
+        _CharProfile.transform.SetParent(_RootCanvas.transform);
+        _CharProfile.SetActive(true);
+    }
+
+
     /// <summary>
     /// 进入战斗场景
     /// </summary>
     private void EntryBattleArea()
     {
-        ShowAreaTitle();
+        Init();
     }
 
-    private void ShowAreaTitle()
-    {
-        
-    }
+
 
     private void Init()
     {
+        LoadUI();
         MonsterSet();
     }
 
