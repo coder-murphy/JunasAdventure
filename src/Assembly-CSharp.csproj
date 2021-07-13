@@ -80,6 +80,8 @@
     <Compile Include="Assets\FDGameSDK\Interfaces\IFDObjectBase.cs" />
     <Compile Include="Assets\FDGameSDK\Interfaces\IFDPlayer.cs" />
     <Compile Include="Assets\FDGameSDK\Interfaces\IFDRole.cs" />
+    <Compile Include="Assets\FDGameSDK\SQLite\DataProvider.cs" />
+    <Compile Include="Assets\FDGameSDK\SQLite\SqliteDataUnit.cs" />
     <Compile Include="Assets\Ferr\2D\Scripts\Ferr2D_DynamicMesh.cs" />
     <Compile Include="Assets\Ferr\2D\Scripts\Ferr2D_IPath.cs" />
     <Compile Include="Assets\Ferr\2D\Scripts\Ferr2D_Path.cs" />
@@ -196,6 +198,7 @@
     <Compile Include="Assets\Samples\Cinemachine\2.6.5\Cinemachine Example Scenes\Shared\Scripts\SpawnInCircle.cs" />
     <Compile Include="Assets\Scripts\CameraManager\CameraManager.cs" />
     <Compile Include="Assets\Scripts\Character\Character.cs" />
+    <Compile Include="Assets\Scripts\DataManager\DataManager.cs" />
     <Compile Include="Assets\Scripts\ForestStageLv3.cs" />
     <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
     <Compile Include="Assets\Scripts\LoadScreen.cs" />
@@ -417,6 +420,12 @@
     </Reference>
     <Reference Include="DOTween">
       <HintPath>E:/GitHub/JunasAdventure/src/Assets/Demigiant/DOTween/DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Data.Sqlite">
+      <HintPath>E:/GitHub/JunasAdventure/src/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>E:/GitHub/JunasAdventure/src/Assets/Plugins/System.Data.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/GameDevelop/2019.4.14f1c1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

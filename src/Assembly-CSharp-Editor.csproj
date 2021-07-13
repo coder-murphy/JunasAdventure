@@ -296,6 +296,12 @@
     <Reference Include="DOTweenEditor">
       <HintPath>E:/GitHub/JunasAdventure/src/Assets/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Data.Sqlite">
+      <HintPath>E:/GitHub/JunasAdventure/src/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>E:/GitHub/JunasAdventure/src/Assets/Plugins/System.Data.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>E:/GitHub/JunasAdventure/src/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
