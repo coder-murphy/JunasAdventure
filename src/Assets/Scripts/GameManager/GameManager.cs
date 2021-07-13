@@ -1,9 +1,12 @@
-﻿using DG.Tweening;
+﻿using Assets.FDGameSDK.SQLite;
+using Assets.Scripts.DataManager;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +20,25 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public CameraManager CameraManager;
 
+    private DataManager _DataManager = null;
+    /// <summary>
+    /// 数据管理器
+    /// </summary>
+    public DataManager DataManager
+    {
+        get
+        {
+            if (_DataManager == null)
+                _DataManager = new DataManager();
+            return _DataManager;
+        }
+    }
+
+    /// <summary>
+    /// 程序启动路径
+    /// </summary>
+    public static string StartUpPath => System.IO.Directory.GetCurrentDirectory();
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -28,9 +50,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    private void LateUpdate()
+    {
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            Debug.Log("关闭数据库服务");
+            DataManager.CloseService();
+        }
+    }
+
     private void Init()
     {
         _RootCanvas = GameObject.Find("Canvas");
+        DataManager.Init();
+        DataManager.AddCharInfo("GameEditor");
+        //Debug.Log(DataBasePath);
     }
 
     private GameObject _RootCanvas ;
@@ -89,6 +124,11 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    #region database
+
+
+    #endregion
 }
 
 /// <summary>
