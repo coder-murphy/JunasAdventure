@@ -55,5 +55,21 @@ namespace Assets.Scripts.DataManager
             var reader = _DataProvider.ExecuteQuery(query);
             return true;
         }
+
+        /// <summary>
+        /// 获取所有信息
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public bool GetAllInfos(string tableName)
+        {
+            var query = _DataProvider.GetAllDataQuery(tableName);
+            var reader = _DataProvider.ExecuteQuery(query);
+            while(reader.Read())
+            {
+                Debug.Log($"id:{reader.GetInt32(0)},name:{reader.GetString(1)}");
+            }
+            return true;
+        }
     }
 }
