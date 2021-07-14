@@ -64,7 +64,8 @@ public class GameManager : MonoBehaviour
     {
         _RootCanvas = GameObject.Find("Canvas");
         DataManager.Init();
-        DataManager.AddCharInfo("GameEditor");
+        //DataManager.AddCharInfo("GameEditor");
+        DataManager.GetAllInfos("CharData");
         //Debug.Log(DataBasePath);
     }
 

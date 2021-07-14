@@ -141,6 +141,17 @@ namespace Assets.FDGameSDK.SQLite
         }
 
         /// <summary>
+        /// 获取所有数据的sql串
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public string GetAllDataQuery(string tableName)
+        {
+            string query = $"SELECT * FROM {tableName}";
+            return query;
+        }
+
+        /// <summary>
         /// 获取表中所有索引的查询串
         /// </summary>
         /// <param name="tableName"></param>
