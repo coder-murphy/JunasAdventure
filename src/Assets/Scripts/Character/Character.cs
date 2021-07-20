@@ -15,26 +15,36 @@ public class Character : MonoBehaviour
 
     float jumpForce = 8000.0f;   //跳跃力
 
-    Animator CharAnimator => gameObject.GetComponent<Animator>();
+    Animator _CharAnimator = null;
 
-    Transform CharTransform => gameObject.GetComponent<Transform>();
+    Transform _CharTransform = null;
+
+    RectTransform _CharRectTransform = null;
+
+    CapsuleCollider2D _CapsuleCollider2D = null;
+
+    Rigidbody2D _Rigidbody2D = null;
 
     private void Awake()
     {
-        Initialization();
-        AddEventHandler();
+
     }
 
     private void Initialization()
     {
+        _CharAnimator = gameObject.GetComponent<Animator>();
         AniState = PlayerCharAnimationState.Stand;
-
+        _CapsuleCollider2D = this.GetComponent<CapsuleCollider2D>();
+        _Rigidbody2D = this.GetComponent<Rigidbody2D>();
+        _CharTransform = gameObject.GetComponent<Transform>();
+        _CharRectTransform = GetComponent<RectTransform>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        Initialization();
+        AddEventHandler();
     }
 
     bool isJumping = false;
@@ -43,52 +53,44 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
-        var cap = this.GetComponent<CapsuleCollider2D>();
-        var rg = this.GetComponent<Rigidbody2D>();
         //cap.Raycast
-        Vector2 vec = rg.velocity;
+        Vector2 vec = _Rigidbody2D.velocity;
         var vecX = Input.GetAxis("Horizontal");
         var vecY = Input.GetAxis("Vertical");
-        var sc = CharTransform.localScale;
+        var sc = _CharTransform.localScale;
         float scaleX = 0;
         float scaleY = sc.y;
-        var speedY = rg.velocity.y;
+        var speedY = _Rigidbody2D.velocity.y;
         if(Input.GetKeyUp(KeyCode.X))
         {
             isAttacking = false;
         }
     }
 
-
-    /// <summary>
-    /// 碰撞检测
-    /// </summary>
-    void OnColliderTrigger()
-    {
-        Debug.Log("碰撞");
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        var rg = this.GetComponent<Rigidbody2D>();
-        var coli = this.GetComponent<CapsuleCollider2D>();
-        if (collision.collider.tag == "Ground")
+        var normalLine = collision.contacts[0].normal;
+        var currentDir = transform.TransformDirection(Vector2.right);
+        //var dir = Vector2.Reflect(normalLine);
+        Debug.Log(normalLine);
+        Debug.Log(currentDir);
+        if (collision.collider.tag == "Ground" && normalLine.y > 0)
         {
             isJumping = false;
-            if (rg.velocity.x < -0.10f)
+            if (_Rigidbody2D.velocity.x < -0.10f)
             {
                 AniState = PlayerCharAnimationState.WalkLeft;
-                CharAnimator.SetInteger(AniName_CharState, 1);
+                _CharAnimator.SetInteger(AniName_CharState, 1);
             }
-            else if (rg.velocity.x > 0.10f)
+            else if (_Rigidbody2D.velocity.x > 0.10f)
             {
                 AniState = PlayerCharAnimationState.WalkRight;
-                CharAnimator.SetInteger(AniName_CharState, 1);
+                _CharAnimator.SetInteger(AniName_CharState, 1);
             }
             else
             {
                 AniState = PlayerCharAnimationState.Stand;
-                CharAnimator.SetInteger(AniName_CharState, 0);
+                _CharAnimator.SetInteger(AniName_CharState, 0);
             }
             Debug.Log("碰撞地板,解除跳跃");
         }
@@ -102,24 +104,23 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        var rg = this.GetComponent<Rigidbody2D>();
-        var coli = this.GetComponent<CapsuleCollider2D>();
         var vecX = Input.GetAxis("Horizontal");
         var vecY = Input.GetAxis("Vertical");
-        var sc = CharTransform.localScale;
+        var sc = _CharTransform.localScale;
         float scaleX = 0;
         float scaleY = sc.y;
-        var speedY = rg.velocity.y;
+        var speedY = _Rigidbody2D.velocity.y;
         bool isDoubleDir = Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow);
+        bool isLeft = _CharTransform.localScale.x > 0;
         if (isJumping == false)
         {
             if (Input.GetKey(KeyCode.C))
             {
                 isJumping = true;
                 //coli.enabled = false;
-                rg.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                _Rigidbody2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 //rg.velocity = new Vector2(rg.velocity.x, jumpForce * Time.deltaTime);
-                CharAnimator.SetInteger(AniName_CharState, 2);
+                _CharAnimator.SetInteger(AniName_CharState, 2);
                 AniState = PlayerCharAnimationState.Jump;
                 //Invoke("ResetCollider", 0.5f);
             }
@@ -127,7 +128,7 @@ public class Character : MonoBehaviour
             {
                 Debug.Log("攻击");
                 isAttacking = true;
-                CharAnimator.SetInteger(AniName_CharState, 3);
+                _CharAnimator.SetInteger(AniName_CharState, 3);
                 AniState = PlayerCharAnimationState.Attack;
                 Invoke("ResetAttackState", 0.6f);
             }
@@ -140,19 +141,29 @@ public class Character : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow) && isDoubleDir == false && isAttacking == false)
         {
             //rg.velocity = new Vector2(vecX * speed, rg.velocity.y);
+
             if (Input.GetKey(KeyCode.X))
             {
                 Debug.Log("攻击");
                 isAttacking = true;
-                CharAnimator.SetInteger(AniName_CharState, 3);
+                _CharAnimator.SetInteger(AniName_CharState, 3);
                 AniState = PlayerCharAnimationState.Attack;
                 Invoke("ResetAttackState", 0.6f);
             }
             else
             {
-                rg.AddForce(new Vector2(vecX * speed, 0), ForceMode2D.Impulse);
+                _Rigidbody2D.AddForce(new Vector2(vecX * speed, 0), ForceMode2D.Impulse);
                 scaleX = sc.x > 0 ? -sc.x : sc.x;
-                CharTransform.localScale = new Vector2(scaleX, scaleY);
+                _CharTransform.localScale = new Vector2(scaleX, scaleY);
+                //if (AniState == PlayerCharAnimationState.WalkRight)
+                //{
+                //    _CharTransform.localPosition = new Vector2(_CharTransform.localPosition.x + 0.8f, _CharTransform.localPosition.y);
+                //}
+                //else if (AniState == PlayerCharAnimationState.Stand)
+                //{
+                //    if(isLeft == false) _CharTransform.localPosition = new Vector2(_CharTransform.localPosition.x + 0.8f, _CharTransform.localPosition.y);
+                //}
+
                 if (isJumping)
                 {
 
@@ -160,7 +171,7 @@ public class Character : MonoBehaviour
                 else
                 {
                     AniState = PlayerCharAnimationState.WalkLeft;
-                    CharAnimator.SetInteger(AniName_CharState, 1);
+                    _CharAnimator.SetInteger(AniName_CharState, 1);
                 }
             }
         }
@@ -171,15 +182,23 @@ public class Character : MonoBehaviour
             {
                 Debug.Log("攻击");
                 isAttacking = true;
-                CharAnimator.SetInteger(AniName_CharState, 3);
+                _CharAnimator.SetInteger(AniName_CharState, 3);
                 AniState = PlayerCharAnimationState.Attack;
                 Invoke("ResetAttackState", 0.6f);
             }
             else
             {
-                rg.AddForce(new Vector2(vecX * speed, 0), ForceMode2D.Impulse);
+                _Rigidbody2D.AddForce(new Vector2(vecX * speed, 0), ForceMode2D.Impulse);
                 scaleX = Math.Abs(sc.x);
-                CharTransform.localScale = new Vector2(scaleX, scaleY);
+                _CharTransform.localScale = new Vector2(scaleX, scaleY);
+                //if (AniState == PlayerCharAnimationState.WalkLeft)
+                //{
+                //    _CharTransform.localPosition = new Vector2(_CharTransform.localPosition.x - 0.8f, _CharTransform.localPosition.y);
+                //}
+                //else if (AniState == PlayerCharAnimationState.Stand)
+                //{
+                //    if (isLeft) _CharTransform.localPosition = new Vector2(_CharTransform.localPosition.x - 0.8f, _CharTransform.localPosition.y);
+                //}
                 if (isJumping)
                 {
 
@@ -187,7 +206,7 @@ public class Character : MonoBehaviour
                 else
                 {
                     AniState = PlayerCharAnimationState.WalkRight;
-                    CharAnimator.SetInteger(AniName_CharState, 1);
+                    _CharAnimator.SetInteger(AniName_CharState, 1);
                 }
             }
 
@@ -195,12 +214,12 @@ public class Character : MonoBehaviour
         }
         if (isDoubleDir && isJumping == false)
         {
-            CharAnimator.SetInteger(AniName_CharState, 0);
+            _CharAnimator.SetInteger(AniName_CharState, 0);
             AniState = PlayerCharAnimationState.Stand;
         }
         if (Math.Abs(vecX) < 0.30f && Math.Abs(speedY) < 0.30f && isAttacking == false && isJumping == false)
         {
-            CharAnimator.SetInteger(AniName_CharState, 0);
+            _CharAnimator.SetInteger(AniName_CharState, 0);
             AniState = PlayerCharAnimationState.Stand;
         }
     }
@@ -227,7 +246,7 @@ public class Character : MonoBehaviour
     {
         get
         {
-            if (CharTransform.localScale.x > 0)
+            if (_CharTransform.localScale.x > 0)
                 return PlayerCharFace.Right;
             else
                 return PlayerCharFace.Left;

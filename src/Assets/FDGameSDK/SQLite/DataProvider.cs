@@ -141,7 +141,7 @@ namespace Assets.FDGameSDK.SQLite
         }
 
         /// <summary>
-        /// 获取所有数据的sql串
+        /// 获取所有数据的查询串
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
@@ -151,15 +151,28 @@ namespace Assets.FDGameSDK.SQLite
             return query;
         }
 
+
         /// <summary>
-        /// 获取表中所有索引的查询串
+        /// 获得获取一列数据的查询串
         /// </summary>
         /// <param name="tableName"></param>
-        /// <param name="indexKeyName"></param>
+        /// <param name="columnName"></param>
         /// <returns></returns>
-        public string GetAllIndexQuery(string tableName,string indexKeyName)
+        public string GetOneColumnQuery(string tableName,string columnName)
         {
-            string query = $"SELECT {indexKeyName} FROM {tableName}";
+            string query = $"SELECT {columnName} FROM {tableName}";
+            return query;
+        }
+
+        /// <summary>
+        /// 获取根据where子串生成的查询串
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="conditionString"></param>
+        /// <returns></returns>
+        public string GetDataQueryByWhere(string tableName,string conditionString)
+        {
+            string query = $"SELECT * FROM {tableName} WHERE {conditionString}";
             return query;
         }
     }
