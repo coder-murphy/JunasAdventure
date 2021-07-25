@@ -15,5 +15,15 @@ namespace Assets.FDGameSDK.Interfaces
         /// 唯一标识
         /// </summary>
         string Uid { get; set; }
+
+        /// <summary>
+        /// 名称
+        /// </summary>
+        string Name { get; set; }
+
+        /// <summary>
+        /// 描述
+        /// </summary>
+        string Desc { get; set; }
     }
 }

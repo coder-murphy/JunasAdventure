@@ -19,6 +19,12 @@ public class FDObjectBase : MonoBehaviour, IFDObjectBase
         set => _Uid = value;
     }
 
+    /// <summary>
+    /// 名称
+    /// </summary>
+    public string Name { get; set; }
+    public string Desc { get; set; }
+
     // Start is called before the first frame update
     void Start()
     {
