@@ -71,6 +71,7 @@
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
+    <Compile Include="Assets\FDGameSDK\Extensions.cs" />
     <Compile Include="Assets\FDGameSDK\FDObjectBase.cs" />
     <Compile Include="Assets\FDGameSDK\GameObjects\Items\FDItem.cs" />
     <Compile Include="Assets\FDGameSDK\Interfaces\BattleNeeds\IFDEffect.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Assets\FDGameSDK\Interfaces\Items\IFDArmor.cs" />
     <Compile Include="Assets\FDGameSDK\Interfaces\Items\IFDItem.cs" />
     <Compile Include="Assets\FDGameSDK\Interfaces\Items\IFDItemAttribute.cs" />
+    <Compile Include="Assets\FDGameSDK\Modules\GameObjectsModule.cs" />
     <Compile Include="Assets\FDGameSDK\SQLite\DataProvider.cs" />
     <Compile Include="Assets\FDGameSDK\SQLite\SqliteDataUnit.cs" />
     <Compile Include="Assets\Ferr\2D\Scripts\Ferr2D_DynamicMesh.cs" />
@@ -204,6 +206,7 @@
     <Compile Include="Assets\Samples\Cinemachine\2.6.5\Cinemachine Example Scenes\Shared\Scripts\SpawnInCircle.cs" />
     <Compile Include="Assets\Scripts\CameraManager\CameraManager.cs" />
     <Compile Include="Assets\Scripts\Character\Character.cs" />
+    <Compile Include="Assets\Scripts\Character\Inventory.cs" />
     <Compile Include="Assets\Scripts\DataManager\DataManager.cs" />
     <Compile Include="Assets\Scripts\ForestStageLv3.cs" />
     <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
