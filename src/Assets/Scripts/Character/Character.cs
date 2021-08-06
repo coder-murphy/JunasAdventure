@@ -54,13 +54,13 @@ public class Character : MonoBehaviour
     private void Update()
     {
         //cap.Raycast
-        Vector2 vec = _Rigidbody2D.velocity;
-        var vecX = Input.GetAxis("Horizontal");
-        var vecY = Input.GetAxis("Vertical");
-        var sc = _CharTransform.localScale;
-        float scaleX = 0;
-        float scaleY = sc.y;
-        var speedY = _Rigidbody2D.velocity.y;
+        //Vector2 vec = _Rigidbody2D.velocity;
+        //var vecX = Input.GetAxis("Horizontal");
+        //var vecY = Input.GetAxis("Vertical");
+        //var sc = _CharTransform.localScale;
+        //float scaleX = 0;
+        //float scaleY = sc.y;
+        //var speedY = _Rigidbody2D.velocity.y;
         if(Input.GetKeyUp(KeyCode.X))
         {
             isAttacking = false;

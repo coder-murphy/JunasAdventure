@@ -35,5 +35,22 @@ namespace Assets.FDGameSDK
             }
             return temp;
         }
+
+        /// <summary>
+        /// 初始化一个指定大小的unity对象List
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public static List<T> Repeat<T>(T value,uint count)
+            where T : UnityEngine.Object
+        {
+            var temp = new List<T>();
+            for (int i = 0; i < count; i++)
+            {
+                temp.Add(UnityEngine.Object.Instantiate(value));
+            }
+            return temp;
+        }
     }
 }
