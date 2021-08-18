@@ -1,9 +1,14 @@
-﻿using System.Collections;
+﻿using Assets.FDGameSDK.Components;
+using Assets.FDGameSDK.GameObjects;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory : Singleton<Inventory>
 {
+    [SerializeField]
+    GameObject closeBtn;
+
     /// <summary>
     /// 物品栏中的物品
     /// </summary>
@@ -24,6 +29,11 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
+    /// 窗口关闭
+    /// </summary>
+    public event FDEventHandler Closed = null;
+
+    /// <summary>
     /// 最大行数
     /// </summary>
     public const int RowMax = 8;
@@ -37,14 +47,13 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-        Items = new List<FDItem>();
-        //Items.Repeat
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Items = new List<FDItem>();
     }
 
     // Update is called once per frame

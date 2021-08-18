@@ -71,9 +71,15 @@
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
+    <Compile Include="Assets\FDGameSDK\Components\EventHandlers.cs" />
+    <Compile Include="Assets\FDGameSDK\Components\LocalConfig.cs" />
     <Compile Include="Assets\FDGameSDK\Extensions.cs" />
     <Compile Include="Assets\FDGameSDK\FDObjectBase.cs" />
+    <Compile Include="Assets\FDGameSDK\FPSupport\FPSupport.cs" />
+    <Compile Include="Assets\FDGameSDK\FPSupport\FPSwitchLine.cs" />
+    <Compile Include="Assets\FDGameSDK\FPSupport\IFPSwitchLine.cs" />
     <Compile Include="Assets\FDGameSDK\GameObjects\Items\FDItem.cs" />
+    <Compile Include="Assets\FDGameSDK\GameObjects\Singleton.cs" />
     <Compile Include="Assets\FDGameSDK\Interfaces\BattleNeeds\IFDEffect.cs" />
     <Compile Include="Assets\FDGameSDK\Interfaces\Chars\IFDChar.cs" />
     <Compile Include="Assets\FDGameSDK\Interfaces\Chars\IFDCharAttribute.cs" />
@@ -88,6 +94,7 @@
     <Compile Include="Assets\FDGameSDK\Interfaces\Items\IFDItem.cs" />
     <Compile Include="Assets\FDGameSDK\Interfaces\Items\IFDItemAttribute.cs" />
     <Compile Include="Assets\FDGameSDK\Modules\GameObjectsModule.cs" />
+    <Compile Include="Assets\FDGameSDK\Modules\InputModule.cs" />
     <Compile Include="Assets\FDGameSDK\SQLite\DataProvider.cs" />
     <Compile Include="Assets\FDGameSDK\SQLite\SqliteDataUnit.cs" />
     <Compile Include="Assets\Ferr\2D\Scripts\Ferr2D_DynamicMesh.cs" />
